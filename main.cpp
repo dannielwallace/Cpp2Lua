@@ -6,13 +6,14 @@
 USING_NAMESPACE_LUAREG
 
 void LuaTest() {
-  REGISTER_LUA_CALSS(Test);
+	REGISTER_LUA_CALSS(Test);
+	REGISTER_LUA_CALSS(Test2);
   
-  Test* test = new Test;
-  test->m_data = 1001;
-  test->m_data2 = 1002;
-  g_luaReg->RegisterObject("test", test);
-  g_luaReg->DoScript("Test.lua");
+	Test* test = new Test;
+	test->m_data = 1001;
+	test->m_data2 = 1002;
+	g_luaReg->RegisterObject("test", test);
+	g_luaReg->DoScript("Test.lua");
 }
 
 int main() {

@@ -94,7 +94,7 @@ struct MethodData##N : public GenericMethod { \
   int Call(lua_State* L) { \
     T* obj = ReadToCpp<T*>(L, 1); \
     R result =(obj->*m_func)(ARG_LIST_##N); \
-    PushToLua<R>(L, result); \
+    PushToLua(L, result); \
     return 1; \
   } \
 };
@@ -213,6 +213,15 @@ void RegisterObjectToLua(lua_State* L, const char* name, T* object) {
   luaL_getmetatable(L, ClassInfo<T>::Name());
   lua_setmetatable(L, -2);
   lua_setglobal(L, name);
+}
+
+template<typename T>
+void PushObjectToLua(lua_State* L, T* object) {
+	typedef UserData<T*> UserData_t;
+	void* memory = lua_newuserdata(L, sizeof(UserData_t));
+	new(memory) UserData_t(object);
+	luaL_getmetatable(L, ClassInfo<T>::Name());
+	lua_setmetatable(L, -2);
 }
 
 DECL_NAMESPACE_LUAREG_END

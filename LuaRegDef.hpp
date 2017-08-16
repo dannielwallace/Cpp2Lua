@@ -119,7 +119,7 @@ inline void PushToLua(lua_State *L, T data) {
 
 template<typename T>
 inline void PushToLua(lua_State *L, T* data) {
-  CppToLua<T>::ConvertUserdata(L, data);
+  CppToLua<T*>::ConvertUserdata(L, data);
 };
 
 template<>
